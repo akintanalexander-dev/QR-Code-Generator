@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="intro-panel">
+        <p class="eyebrow">QR / 01</p>
+        <h1>Turn a link into a signal.</h1>
+        <p class="intro-copy">Create a crisp, ready-to-scan QR code from any web address.</p>
+        <div class="status-line"><span></span> Local generation · no account needed</div>
+      </section>
+
+      <section class="generator-panel" aria-label="QR code generator">
+        <form id="qr-form">
+          <label for="url-input">Web address</label>
+          <div class="input-row">
+            <input id="url-input" name="url" type="url" placeholder="https://example.com" autocomplete="url" required />
+            <button type="submit">Generate <span aria-hidden="true">↗</span></button>
+          </div>
+          <p id="form-message" class="form-message" role="alert"></p>
+        </form>
+
+        <div id="result" class="result" aria-live="polite">
+          <div class="result-placeholder">
+            <div class="placeholder-mark">＋</div>
+            <p>Your QR code will appear here</p>
+          </div>
+          <div class="result-content" hidden>
+            <div class="qr-frame"><img id="qr-image" alt="Generated QR code" /></div>
+            <div class="result-actions">
+              <span id="result-url"></span>
+              <a id="download-link" class="download-button" download="qr-code.png">Download PNG <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

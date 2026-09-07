@@ -1,29 +1,32 @@
-import inquirer from 'inquirer';
+import express from "express";
 import qr from "qr-image";
-import fs from "fs"
 
-inquirer
-  .prompt([
-    {
-        "message": "Type in your URL: ",
-        name: "URL" 
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.static("public"));
+
+app.get("/api/qr", (request, response) => {
+  const value = request.query.url;
+
+  if (typeof value !== "string" || !value.trim()) {
+    return response.status(400).json({ error: "Enter a URL to generate a QR code." });
+  }
+
+  try {
+    const url = new URL(value);
+
+    if (!["http:", "https:"].includes(url.protocol)) {
+      throw new Error("Unsupported protocol");
     }
-  ])
-  .then((answers) => {
-    const url = answers.URL;
-    var qr_svg = qr.image(url);
-    qr_svg.pipe(fs.createWriteStream("qr_img.png"));
 
-    fs.writeFile('URL.txt', url, (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-    }); 
+    response.type("png");
+    return qr.image(value, { type: "png", size: 10, margin: 2 }).pipe(response);
+  } catch {
+    return response.status(400).json({ error: "Enter a valid HTTP or HTTPS URL." });
+  }
+});
 
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
-    } else {
-      // Something else went wrong
-    }
-  });
+app.listen(port, () => {
+  console.log(`QR Code Generator is running at http://localhost:${port}`);
+});

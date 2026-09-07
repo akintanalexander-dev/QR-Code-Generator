@@ -1,0 +1,83 @@
+:root {
+  color-scheme: light;
+  --ink: #20211d;
+  --muted: #76756d;
+  --paper: #f4f1e9;
+  --panel: #fbfaf5;
+  --lime: #d6f25d;
+  --line: #d9d7ce;
+  --orange: #f26b3f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 12% 8%, rgba(214, 242, 93, .48), transparent 27%), linear-gradient(135deg, #f4f1e9 0%, #ede9de 100%);
+  content: "";
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, .78fr) minmax(420px, 1.22fr);
+  gap: clamp(3rem, 9vw, 10rem);
+  width: min(1180px, calc(100% - 4rem));
+  min-height: 100vh;
+  margin: auto;
+  padding: clamp(3rem, 10vh, 8rem) 0;
+  align-items: center;
+}
+
+.intro-panel { align-self: center; }
+.eyebrow, label, .status-line, .result-actions, .form-message { font-family: "DM Mono", monospace; }
+.eyebrow { margin: 0 0 2rem; color: var(--orange); font-size: .8rem; letter-spacing: .12em; }
+
+h1 {
+  max-width: 520px;
+  margin: 0;
+  font-size: clamp(3rem, 6vw, 5.75rem);
+  line-height: .94;
+  letter-spacing: -.04em;
+}
+
+.intro-copy { max-width: 340px; margin: 2rem 0 3.5rem; color: var(--muted); font-size: 1.05rem; line-height: 1.55; }
+.status-line { display: flex; align-items: center; gap: .65rem; color: var(--muted); font-size: .7rem; }
+.status-line span { width: 7px; height: 7px; border-radius: 50%; background: #79a93e; }
+.generator-panel { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid var(--line); background: rgba(251, 250, 245, .76); box-shadow: 18px 18px 0 rgba(32, 33, 29, .06); }
+label { display: block; margin-bottom: .75rem; color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; }
+.input-row { display: flex; border-bottom: 2px solid var(--ink); }
+input { min-width: 0; flex: 1; padding: .85rem 0; border: 0; outline: 0; color: var(--ink); background: transparent; font: 1.05rem "Space Grotesk", sans-serif; }
+input::placeholder { color: #aaa79c; }
+button, .download-button { border: 0; cursor: pointer; font: 500 .85rem "DM Mono", monospace; }
+button { padding: .85rem 0 .85rem 1rem; color: var(--ink); background: transparent; }
+button:hover { color: var(--orange); }
+button span, .download-button span { font-size: 1.1rem; }
+.form-message { min-height: 1.25rem; margin: .75rem 0 1.4rem; color: var(--orange); font-size: .72rem; }
+.result { display: grid; min-height: 390px; place-items: center; border: 1px dashed var(--line); background: #f3f0e7; }
+.result-placeholder { color: var(--muted); text-align: center; }
+.placeholder-mark { margin-bottom: 1rem; color: var(--orange); font-size: 2rem; }
+.result-placeholder p { margin: 0; font: .72rem "DM Mono", monospace; }
+.result-content { width: min(100%, 320px); padding: 1rem; }
+.qr-frame { padding: 1rem; background: white; }
+.qr-frame img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.result-actions { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1rem; color: var(--muted); font-size: .65rem; }
+#result-url { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.download-button { flex: 0 0 auto; color: var(--ink); text-decoration: none; }
+.download-button:hover { color: var(--orange); }
+
+@media (max-width: 760px) {
+  .app-shell { display: block; width: min(100% - 2rem, 560px); padding: 2.5rem 0; }
+  .intro-copy { margin-bottom: 2rem; }
+  .generator-panel { margin-top: 3rem; }
+  .result { min-height: 300px; }
+}
