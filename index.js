@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static("public"));
 
-app.get("/api/qr", (request, response) => {
+app.get(["/api/qr", "/qr"], (request, response) => {
   const value = request.query.url;
 
   if (typeof value !== "string" || !value.trim()) {
@@ -27,6 +27,10 @@ app.get("/api/qr", (request, response) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`QR Code Generator is running at http://localhost:${port}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`QR Code Generator is running at http://localhost:${port}`);
+  });
+}
+
+export default app;

@@ -18,8 +18,15 @@ form.addEventListener("submit", async (event) => {
     const response = await fetch(requestUrl);
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error);
+      const responseType = response.headers.get("content-type") || "";
+
+      if (responseType.includes("application/json")) {
+        const error = await response.json();
+        throw new Error(error.error || "Unable to generate the QR code.");
+      }
+
+      const errorText = await response.text();
+      throw new Error(errorText || `The QR service returned HTTP ${response.status}.`);
     }
 
     const imageBlob = await response.blob();
